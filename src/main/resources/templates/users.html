@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    
+
+
+</head>
+<body>
+<h1 >User table</h1>
+    <table bordercolor="#808080" cellspacing="0" cellpadding="5">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>sex</th>
+            <th>age</th>
+        </tr>
+                <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:utext="${user.getId()}">Id</td>
+            <td><a th:href="@{/{id}(id=${user.getId()})}" th:utext="${user.getName()}">Name </a></td>
+            <td th:utext="${user.getSex()}">Sex</td>
+            <td th:utext="${user.getAge()}">Age</td>
+            <td th:utext="${user.getRolesName()}">Roles</td>
+            <td><a th:href="@{/remove/{id}(id=${user.getId()})}">Remove</a></td>
+            <td><a th:href="@{/{id}/edit(id=${user.getId()})}">Update</a></td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+<!--<a  href="/new"> Add User </a>-->
+
+<form action="/new" target="_blank">
+<button>Add user</button>
+</form>
+<a href="/logout">Logout</a>
+
+</body>
+</html>
