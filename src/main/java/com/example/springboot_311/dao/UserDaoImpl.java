@@ -23,6 +23,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        return entityManager.createQuery("select u from User u where u.email = :email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User getUser(Long id) {
         return entityManager.createQuery("select u from User u where u.id = :id", User.class)
                 .setParameter("id", id)

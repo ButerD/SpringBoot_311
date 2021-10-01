@@ -14,4 +14,5 @@ public interface UserService  {
     public User getUser(Long id);
     public void updateUser(User user);
     User findByUserName(String name);
+    User findByEmail(String name);
 }

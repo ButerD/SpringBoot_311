@@ -13,6 +13,7 @@ public interface UserDao {
     void removeUser(Long id);
     void updateUser(User user);
     User findByUserName(String name);
+    User findByEmail(String name);
     User getUser(Long id);
 
 }

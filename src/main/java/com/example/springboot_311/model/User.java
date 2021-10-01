@@ -1,5 +1,6 @@
 package com.example.springboot_311.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,14 +11,25 @@ import java.util.stream.Collectors;
 
 @Table(name = "users")
 @Entity
+@Data
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", length = 45)
+    @Column(name = "name", length = 45, nullable = false)
+
     private String name;
+
+    @Column
+    private String lastName;
+
+    @Column
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String email;
 
     @Column(name = "sex", length = 45)
     private String sex;
@@ -32,72 +44,12 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
 
-    public User(String name, String sex, Integer age) {
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
-
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
-    public User() {
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getRolesName(){
-        return getRoles().stream().map(Role::getName).collect(Collectors.toList()).toString();
+    public String getRolesName() {
+        StringBuilder sb = new StringBuilder();
+        for (Role role : roles) {
+            sb.append(role.getName()).append(" ");
+        }
+        return sb.toString();
     }
 
     @Override
@@ -112,7 +64,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

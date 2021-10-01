@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByEmail(String name) {
+        return userDao.findByEmail(name);
+    }
+
+    @Override
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
@@ -61,7 +66,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(s);
+
+       User user = userDao.findByEmail(s);
+        System.out.println(user);
         if (user == null) {
             throw new UsernameNotFoundException("User not FOUND !!!!!");
         }
