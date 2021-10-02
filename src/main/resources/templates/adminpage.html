@@ -116,10 +116,10 @@
                               <input type="text" class="form-control" id="editPhoneNumber"
                                      name="phoneNumber" th:value="${user.phoneNumber}">
                               <label for="editEmail">Email</label>
-                              <input type="email" class="form-control" id="editEmail"
+                              <input type="email" required class="form-control" id="editEmail"
                                      name="email" th:value="${user.email}">
                               <label for="editPassword">Password</label>
-                              <input type="password" class="form-control"
+                              <input type="password" required class="form-control"
                                      id="editPassword"
                                      name="password" th:value="${user.password}">
 
@@ -171,7 +171,7 @@
                               <input type="text" class="form-control" id="delLastName"
                                      name="lastName" th:value="${user.lastName}" readonly>
                               <label for="delPhoneNumber">Phone number</label>
-                              <input type="text" class="form-control" id="delPhoneNumber"
+                              <input type="text"  class="form-control" id="delPhoneNumber"
                                      name="phoneNumber" th:value="${user.phoneNumber}"
                                      readonly>
                               <label for="delEmail">Email</label>
@@ -220,12 +220,12 @@
                 <input type="text" class="form-control" id="lastName" name="lastName"
                        placeholder="Last name">
                 <label for="phoneNumber">Phone number</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                <input type="text"  class="form-control" id="phoneNumber" name="phoneNumber"
                        placeholder="Phone number">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <input type="email" required class="form-control" id="email" name="email" placeholder="Email">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password"
+                <input type="password" required class="form-control" id="password" name="password"
                        placeholder="Password">
 
                 <label for="myRoles">Role</label>

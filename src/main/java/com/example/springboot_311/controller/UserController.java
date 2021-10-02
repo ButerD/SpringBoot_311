@@ -10,7 +10,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.example.springboot_311.service.RoleService;
 import com.example.springboot_311.service.UserServiceImpl;
-
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class UserController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@GetMapping(value = "/user")
 	public String printWelcome(ModelMap model, Principal principal) {
 		List<String> messages = new ArrayList<>();
 		System.out.println(principal.getName());
@@ -40,9 +39,9 @@ public class UserController {
 		return "user";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping(value = "/login")
 	public String loginPage() {
-		return "/login.html";
+		return "login";
 	}
 
 
@@ -60,37 +59,14 @@ public class UserController {
 		return "redirect:/admin";
 	}
 
-	@GetMapping(value = "admin/new")
-	public String newUser(Model model) {
-		model.addAttribute("user", new User());
-		model.addAttribute("roles",roleService.getAllRoles());
-		return "/trash/addUser.html";
-	}
-
 	@PostMapping(value = "/admin/add-user")
 	public String addNewUser(@ModelAttribute("user") User user, @RequestParam(value = "myRoles", defaultValue = "ROLE_USER") String... myRole) {
-//		Set<Role> roles = new HashSet<>();
-//		for (String s : myRole) {
-//			roles.add(roleService.getRoleByName(s));
-//		}
-		Set<Role> roles = new HashSet<>(Arrays.stream(myRole).map(s -> roleService.getRoleByName(s)).collect(Collectors.toList())) ;
+		Set<Role> roles = Arrays.stream(myRole).map(s -> roleService.getRoleByName(s)).collect(Collectors.toSet());
 		user.setRoles(roles);
 		userService.addUser(user);
 		return "redirect:/admin";
 	}
 
-	@GetMapping(value = "/{id}")
-	public String showUser(@PathVariable("id") Long id, Model model) {
-		model.addAttribute(userService.getUser(id));
-		return "/trash/userinfo.html";
-	}
-
-	@GetMapping(value = "/admin/{id}/edit")
-	public  String editUser(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("user", userService.getUser(id) );
-		model.addAttribute("roles",roleService.getAllRoles());
-		return "/trash/edit.html";
-	}
 
 	@PostMapping("/admin/edit/{id}")
 	public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id, @RequestParam(value = "myRoles", defaultValue = "ROLE_USER") String... myRole) {
@@ -102,7 +78,5 @@ public class UserController {
 		userService.updateUser(user);
 		return "redirect:/admin";
 	}
-
-
 
 }
